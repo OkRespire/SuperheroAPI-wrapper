@@ -1,0 +1,23 @@
+{
+    "name": "superhero-api-wrapper",
+    "version": "1.0.0",
+    "description": "https://superheroapi.com/ wrapper using Typescript",
+    "main": "index.js",
+    "scripts": {
+        "test": "ts-node test.ts"
+    },
+    "keywords": [
+        "superhero",
+        "api"
+    ],
+    "author": "Respire",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.11.0",
+        "dotenv": "^17.2.1"
+    },
+    "devDependencies": {
+        "@types/node": "^24.1.0",
+        "typescript": "^5.8.3"
+    }
+}
