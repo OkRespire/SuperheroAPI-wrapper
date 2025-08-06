@@ -1,26 +1,27 @@
-import axios from "axios"
+import axios, { AxiosInstance } from "axios"
 import * as Types from "./types"
 // import { z } from "zod"
 
 
 
 export class SuperheroAPI {
-    private readonly BASE_URL: string;
-    private token: string | null = null;
+    private api: AxiosInstance;
 
     constructor(BASE_URL: string, token?: string) {
-        this.BASE_URL = BASE_URL;
-
-        if (token) {
-            this.token = token;
+        if (!token) {
+            token = "";
         }
+
+
+
+        this.api = axios.create({
+            baseURL: `${BASE_URL}/${token}/`
+        })
 
     }
 
     public async searchHero(name: string): Promise<Types.Hero[]> {
-        const url = `${this.BASE_URL}/${this.token}/search/${name}`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`search/${name}`);
 
         let searchRes: Types.HeroSearchResponse = res.data;
 
@@ -32,10 +33,7 @@ export class SuperheroAPI {
     }
 
     public async searchHeroById(id: number): Promise<Types.HeroId> {
-        const url = `${this.BASE_URL}/${this.token}/${id}`;
-
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -45,9 +43,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroPowerStats(id: number): Promise<Types.PowerStats> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/powerstats`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/powerstats`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -57,9 +53,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroBiography(id: number): Promise<Types.Biography> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/biography`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/biography`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -70,9 +64,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroAppearance(id: number): Promise<Types.Appearance> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/appearance`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/appearance`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -83,9 +75,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroWork(id: number): Promise<Types.Work> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/work`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/work`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -96,9 +86,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroConnections(id: number): Promise<Types.Connections> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/connections`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/connections`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
@@ -110,9 +98,7 @@ export class SuperheroAPI {
 
 
     public async searchHeroImage(id: number): Promise<Types.Image> {
-        const url = `${this.BASE_URL}/${this.token}/${id}/image`;
-
-        const res = await axios.get(url);
+        const res = await this.api.get(`${id}/image`);
 
         if (res.data.response !== "success") {
             throw new Error("Hero not found");
